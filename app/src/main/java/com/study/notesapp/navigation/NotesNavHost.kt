@@ -1,0 +1,34 @@
+package com.study.notesapp.navigation
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.study.notesapp.screens.Add
+import com.study.notesapp.screens.Main
+import com.study.notesapp.screens.Note
+import com.study.notesapp.screens.Start
+
+sealed class NavRoute(val route: String){
+
+    // инициализация экранов
+    object Start: NavRoute("start_screen")
+    object Main: NavRoute("main_screen")
+    object Add: NavRoute("add_screen")
+    object Note: NavRoute("note_screen")
+    // далее, создаём NavController
+}
+
+@Composable
+fun NotesNavHost() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = NavRoute.Start.route){
+
+        // теперь создадим сами экраны...
+
+        composable(NavRoute.Start.route){ Start(navController = navController) }
+        composable(NavRoute.Main.route){ Main(navController = navController) }
+        composable(NavRoute.Add.route){ Add(navController = navController) }
+        composable(NavRoute.Note.route){ Note(navController = navController) }
+        //далее, в Main activivty подключим эту composable функцию...
+    }
+}
