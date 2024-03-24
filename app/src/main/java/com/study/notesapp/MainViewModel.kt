@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.study.notesapp.database.room.AppRoomDataBase
 import com.study.notesapp.database.room.repository.RoomRepository
 import com.study.notesapp.model.Note
@@ -21,7 +22,6 @@ class MainViewModel (application: Application):AndroidViewModel(application){
 
     val context = application
 
-    // создадим функцию инициализации базы данных
     fun initDatabase(type: String, onSuccess: () -> Unit){
         Log.d("checkData", "MainViewModel init Database with type: $type")
         when(type){
@@ -36,6 +36,26 @@ class MainViewModel (application: Application):AndroidViewModel(application){
      fun addNote(note: Note, onSuccess: () -> Unit){
         viewModelScope.launch ( Dispatchers.IO){
             REPOSITORY.create(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun updateNote(note:Note, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.update(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun deleteNote(note: Note, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.delete(note = note){
                 viewModelScope.launch(Dispatchers.Main){
                     onSuccess()
                 }

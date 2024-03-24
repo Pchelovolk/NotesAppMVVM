@@ -9,15 +9,15 @@ import com.study.notesapp.screens.AddScreen
 import com.study.notesapp.screens.MainScreen
 import com.study.notesapp.screens.NoteScreen
 import com.study.notesapp.screens.StartScreen
+import com.study.notesapp.utils.Constants
 
 sealed class NavRoute(val route: String){
 
-    // инициализация экранов
-    object Start: NavRoute("start_screen")
-    object Main: NavRoute("main_screen")
-    object Add: NavRoute("add_screen")
-    object Note: NavRoute("note_screen")
-    // далее, создаём NavController
+    data object Start: NavRoute(Constants.Screens.START_SCREEN)
+    data object Main: NavRoute(Constants.Screens.MAIN_SCREEN)
+    data object Add: NavRoute(Constants.Screens.ADD_SCREEN)
+    data object Note: NavRoute(Constants.Screens.NOTE_SCREEN)
+
 }
 
 @Composable
@@ -25,12 +25,11 @@ fun NotesNavHost(mViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = NavRoute.Start.route){
 
-        // теперь создадим сами экраны...
-
         composable(NavRoute.Start.route){ StartScreen(navController = navController, viewModel = mViewModel) }
         composable(NavRoute.Main.route){ MainScreen(navController = navController, viewModel = mViewModel) }
         composable(NavRoute.Add.route){ AddScreen(navController = navController, viewModel = mViewModel) }
-        composable(NavRoute.Note.route){ NoteScreen(navController = navController, viewModel = mViewModel) }
-        //далее, в Main activivty подключим эту composable функцию...
+        composable(NavRoute.Note.route + "/{${Constants.Keys.ID}}"){ backStackEntry ->
+            NoteScreen(navController = navController, viewModel = mViewModel, noteID = backStackEntry.arguments?.getString(Constants.Keys.ID)) }
+
     }
 }
