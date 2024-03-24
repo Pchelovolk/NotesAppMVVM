@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import com.study.notesapp.MainViewModel
 import com.study.notesapp.model.Note
 import com.study.notesapp.navigation.NavRoute
+import com.study.notesapp.utils.Constants
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -40,7 +41,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center
         ){
             Text(
-                text = "Add new  NOTE",
+                text = Constants.Keys.ADD_NEW_NOTE,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 8.dp)
@@ -52,7 +53,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                     title = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                 },
-                label = {Text(text = "Note title")},
+                label = {Text(text = Constants.Keys.NOTE_TITLE)},
                 isError = title.isEmpty()
             )
 
@@ -62,7 +63,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                     subtitle = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                 },
-                label = {Text(text = "Note SUB")},
+                label = {Text(text = Constants.Keys.NOTE_SUBTITLE)},
                 isError = subtitle.isEmpty()
             )
 
@@ -77,7 +78,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 }
             ) {
                 Text(
-                    text = "ADD NOTE",
+                    text = Constants.Keys.ADD_NOTE,
                     color = Color.White
                 )
             }

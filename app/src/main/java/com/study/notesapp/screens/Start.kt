@@ -23,13 +23,13 @@ import com.study.notesapp.MainViewModel
 import com.study.notesapp.MainViewModelFactory
 import com.study.notesapp.navigation.NavRoute
 import com.study.notesapp.ui.theme.NotesAppTheme
+import com.study.notesapp.utils.Constants
 import com.study.notesapp.utils.TYPE_FIREBASE
 import com.study.notesapp.utils.TYPE_ROOM
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun StartScreen(navController: NavHostController, viewModel: Any) {
-    // Будут нах-ся текстовое поле и 2 кнопки (локальная и удалённая базы данных)
 
     val context = LocalContext.current
     val mViewModel: MainViewModel =
@@ -44,7 +44,7 @@ fun StartScreen(navController: NavHostController, viewModel: Any) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            Text(text = "What wiil we USE?")
+            Text(text = Constants.Keys.USAGE)
             Button(
                 onClick = {
                     mViewModel.initDatabase(TYPE_ROOM){
@@ -55,7 +55,7 @@ fun StartScreen(navController: NavHostController, viewModel: Any) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Room database")
+                Text(text = Constants.Keys.ROOM_DATABASE)
             }
 
             Button(
@@ -68,7 +68,7 @@ fun StartScreen(navController: NavHostController, viewModel: Any) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "FireBase database")
+                Text(text = Constants.Keys.FIREBASE_DATABASE)
             }
 
         }
