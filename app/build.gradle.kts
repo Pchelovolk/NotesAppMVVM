@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -65,7 +66,20 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    //зависимости, Lesson_3
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.1")
+
+
     // зависисмость для NavController
     val nav_version = "2.4.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // зависимости Lesson_3
+    val room_version = "2.4.2"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+
+
 }
