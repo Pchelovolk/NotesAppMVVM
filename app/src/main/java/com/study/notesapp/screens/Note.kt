@@ -18,7 +18,7 @@ import androidx.navigation.NavHostController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun NoteScreen(navController: NavHostController) {
+fun NoteScreen(navController: NavHostController, viewModel: Any) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize()

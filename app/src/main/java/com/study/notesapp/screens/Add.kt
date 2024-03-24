@@ -21,14 +21,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.study.notesapp.MainViewModel
+import com.study.notesapp.model.Note
 import com.study.notesapp.navigation.NavRoute
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AddScreen(navController: NavHostController) {
+fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
 
     var title by remember{ mutableStateOf("") }
     var subtitle by remember{ mutableStateOf("") }
+    var isButtonEnabled by remember { mutableStateOf(false) }
 
     Scaffold {
         Column (
@@ -45,20 +48,32 @@ fun AddScreen(navController: NavHostController) {
 
             OutlinedTextField(
                 value = title,
-                onValueChange = {title = it},
-                label = {Text(text = "Note title")}
+                onValueChange = {
+                    title = it
+                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                },
+                label = {Text(text = "Note title")},
+                isError = title.isEmpty()
             )
 
             OutlinedTextField(
                 value = subtitle,
-                onValueChange = {subtitle = it},
-                label = {Text(text = "Note SUB")}
+                onValueChange = {
+                    subtitle = it
+                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                },
+                label = {Text(text = "Note SUB")},
+                isError = subtitle.isEmpty()
             )
 
             Button(
                 modifier = Modifier.padding(top = 16.dp),
+                enabled = isButtonEnabled,
                 onClick = {
-                    navController.navigate(NavRoute.Main.route)
+                    viewModel.addNote(note = Note(title = title, subtitle = subtitle)){
+                        navController.navigate(NavRoute.Main.route)
+                    }
+
                 }
             ) {
                 Text(

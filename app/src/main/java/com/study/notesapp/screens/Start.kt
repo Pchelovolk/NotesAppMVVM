@@ -28,7 +28,7 @@ import com.study.notesapp.utils.TYPE_ROOM
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StartScreen(navController: NavHostController) {
+fun StartScreen(navController: NavHostController, viewModel: Any) {
     // Будут нах-ся текстовое поле и 2 кнопки (локальная и удалённая базы данных)
 
     val context = LocalContext.current
@@ -80,6 +80,11 @@ fun StartScreen(navController: NavHostController) {
 @Composable
 fun  prevStartScreen(){
     NotesAppTheme {
-        StartScreen(navController = rememberNavController())
+
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
+        StartScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }

@@ -6,12 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.study.notesapp.database.room.AppRoomDataBase
 import com.study.notesapp.database.room.repository.RoomRepository
 import com.study.notesapp.model.Note
 import com.study.notesapp.utils.REPOSITORY
 import com.study.notesapp.utils.TYPE_FIREBASE
 import com.study.notesapp.utils.TYPE_ROOM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class MainViewModel (application: Application):AndroidViewModel(application){
@@ -29,6 +32,18 @@ class MainViewModel (application: Application):AndroidViewModel(application){
             }
         }
     }
+
+     fun addNote(note: Note, onSuccess: () -> Unit){
+        viewModelScope.launch ( Dispatchers.IO){
+            REPOSITORY.create(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun readAllNotes() = REPOSITORY.readAll
 }
 
 class MainViewModelFactory(private val application: Application): ViewModelProvider.Factory{
