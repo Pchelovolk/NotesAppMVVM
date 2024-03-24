@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.study.notesapp.database.firebase.FirebaseRepository
 import com.study.notesapp.database.room.AppRoomDataBase
 import com.study.notesapp.database.room.repository.RoomRepository
 import com.study.notesapp.model.Note
@@ -29,6 +30,13 @@ class MainViewModel (application: Application):AndroidViewModel(application){
                 val dao = AppRoomDataBase.getInstance(context = context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE ->{
+                REPOSITORY = FirebaseRepository()
+                REPOSITORY.connectToDatabase(
+                    {onSuccess()},
+                    {Log.d("checkData", "ERROR: ${it}")}
+                )
             }
         }
     }
