@@ -9,7 +9,7 @@ import com.study.notesapp.database.room.dao.NoteRoomDao
 import com.study.notesapp.model.Note
 import com.study.notesapp.utils.Constants.Keys.NOTE_DATABASE
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [Note::class], version = 2)
 abstract class AppRoomDataBase : RoomDatabase(){
 
     abstract fun getRoomDao(): NoteRoomDao
@@ -25,7 +25,8 @@ abstract class AppRoomDataBase : RoomDatabase(){
                     context,
                     AppRoomDataBase::class.java,
                     NOTE_DATABASE
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE as AppRoomDataBase
             }else INSTANCE as AppRoomDataBase
         }

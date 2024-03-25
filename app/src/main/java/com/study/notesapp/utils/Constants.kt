@@ -5,11 +5,12 @@ import com.study.notesapp.database.DataBaseRepository
 const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
-const val FIREBASE_ID = "firebaseID"
+const val FIREBASE_ID = "firebaseId"
 
 lateinit var REPOSITORY : DataBaseRepository
 lateinit var LOGIN : String
 lateinit var PASSWORD : String
+lateinit var DB_TYPE : String
 
 object Constants {
 
@@ -30,7 +31,7 @@ object Constants {
         const val ROOM_DATABASE = "Room database"
         const val FIREBASE_DATABASE = "FireBase database"
 
-        const val ID = "ID"
+        const val ID = "Id"
         const val NONE = "none"
 
         const val UPDATE = "UPDATE"

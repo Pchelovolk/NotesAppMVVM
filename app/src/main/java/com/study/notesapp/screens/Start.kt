@@ -40,6 +40,7 @@ import com.study.notesapp.MainViewModelFactory
 import com.study.notesapp.navigation.NavRoute
 import com.study.notesapp.ui.theme.NotesAppTheme
 import com.study.notesapp.utils.Constants
+import com.study.notesapp.utils.DB_TYPE
 import com.study.notesapp.utils.LOGIN
 import com.study.notesapp.utils.PASSWORD
 import com.study.notesapp.utils.TYPE_FIREBASE
@@ -91,6 +92,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                             LOGIN = login
                             PASSWORD = password
                             viewModel.initDatabase(TYPE_FIREBASE){
+                                DB_TYPE = TYPE_FIREBASE
                                 navController.navigate(NavRoute.Main.route)
                             }
                         },
@@ -116,6 +118,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                 Button(
                     onClick = {
                         viewModel.initDatabase(TYPE_ROOM){
+                            DB_TYPE = TYPE_ROOM
                             navController.navigate(route = NavRoute.Main.route)
                         }
                     },

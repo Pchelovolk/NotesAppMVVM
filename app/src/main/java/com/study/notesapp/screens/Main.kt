@@ -26,6 +26,10 @@ import androidx.navigation.NavHostController
 import com.study.notesapp.MainViewModel
 import com.study.notesapp.model.Note
 import com.study.notesapp.navigation.NavRoute
+import com.study.notesapp.utils.Constants
+import com.study.notesapp.utils.DB_TYPE
+import com.study.notesapp.utils.TYPE_FIREBASE
+import com.study.notesapp.utils.TYPE_ROOM
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -58,11 +62,17 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
 
 @Composable
 fun NoteItem(note: Note, navController: NavHostController){
+    val noteId = when(DB_TYPE){
+        TYPE_FIREBASE -> note.firebaseId
+        TYPE_ROOM -> note.id
+        else -> Constants.Keys.EMPTY
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 24.dp)
-            .clickable { navController.navigate(NavRoute.Note.route + "/${note.id}") },
+            .clickable { navController.navigate(NavRoute.Note.route + "/${noteId}")
+            },
         elevation = 6.dp
     ){
         Column (modifier = Modifier.padding(vertical = 8.dp),
