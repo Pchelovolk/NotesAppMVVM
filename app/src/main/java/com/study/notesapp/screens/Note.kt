@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteID: String?) {
 
     val notes = viewModel.readAllNotes().observeAsState(listOf()).value
-    val note = when(DB_TYPE){
+    val note = when(DB_TYPE.value){
         TYPE_FIREBASE -> {notes.firstOrNull { it.firebaseId == noteID } ?: Note()}
         TYPE_ROOM -> {notes.firstOrNull { it.id == noteID?.toInt() } ?: Note()}
         else -> {Note()}
